@@ -22,7 +22,7 @@ import biweekly.util.ListMultimap;
 import com.fasterxml.jackson.core.JsonToken;
 
 /*
- Copyright (c) 2013-2017, Michael Angstadt
+ Copyright (c) 2013-2018, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -105,7 +105,7 @@ public class JCalRawReaderTest {
 					assertEquals("description", name);
 					assertTrue(parameters.isEmpty());
 					assertEquals(ICalDataType.TEXT, dataType);
-					assertEquals("Networld+Interop Conference" + NEWLINE + "and Exhibit" + NEWLINE + "Atlanta World Congress Center" + NEWLINE + "Atlanta, Georgia", value.asSingle());
+					assertEquals("Networld+Interop Conference\nand Exhibit\nAtlanta World Congress Center\nAtlanta, Georgia", value.asSingle());
 					break;
 				}
 

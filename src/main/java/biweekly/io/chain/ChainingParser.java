@@ -17,7 +17,7 @@ import biweekly.io.scribe.property.ICalPropertyScribe;
 import biweekly.property.ICalProperty;
 
 /*
- Copyright (c) 2013-2017, Michael Angstadt
+ Copyright (c) 2013-2018, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -157,6 +157,10 @@ abstract class ChainingParser<T extends ChainingParser<?>> {
 	 */
 	public List<ICalendar> all() throws IOException {
 		StreamReader reader = constructReader();
+		if (index != null) {
+			reader.setScribeIndex(index);
+		}
+
 		try {
 			List<ICalendar> icals = new ArrayList<ICalendar>();
 			ICalendar ical;

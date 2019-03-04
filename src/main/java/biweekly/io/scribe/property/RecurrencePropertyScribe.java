@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 import org.w3c.dom.Element;
 
+import com.github.mangstadt.vinnie.io.VObjectPropertyValues;
+
 import biweekly.ICalDataType;
 import biweekly.ICalVersion;
 import biweekly.component.ICalComponent;
@@ -34,10 +36,8 @@ import biweekly.util.ListMultimap;
 import biweekly.util.Recurrence;
 import biweekly.util.XmlUtils;
 
-import com.github.mangstadt.vinnie.io.VObjectPropertyValues;
-
 /*
- Copyright (c) 2013-2017, Michael Angstadt
+ Copyright (c) 2013-2018, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -99,13 +99,16 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 			return "";
 		}
 
-		//iCal 2.0
-		if (context.getVersion() != ICalVersion.V1_0) {
-			ListMultimap<String, Object> components = buildComponents(property, context, false);
-			return VObjectPropertyValues.writeMultimap(components.getMap());
+		switch (context.getVersion()) {
+		case V1_0:
+			return writeTextV1(property, context);
+		default:
+			return writeTextV2(property, context);
 		}
+	}
 
-		//vCal 1.0
+	private String writeTextV1(T property, WriteContext context) {
+		Recurrence recur = property.getValue();
 		Frequency frequency = recur.getFrequency();
 		if (frequency == null) {
 			return "";
@@ -192,45 +195,24 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 		return sb.toString();
 	}
 
+	private String writeTextV2(T property, WriteContext context) {
+		ListMultimap<String, Object> components = buildComponents(property, context, false);
+		return VObjectPropertyValues.writeMultimap(components.getMap());
+	}
+
 	@Override
 	protected T _parseText(String value, ICalDataType dataType, ICalParameters parameters, ParseContext context) {
-		final Recurrence.Builder builder = new Recurrence.Builder((Frequency) null);
-
 		if (value.length() == 0) {
-			return newInstance(builder.build());
+			return newInstance(new Recurrence.Builder((Frequency) null).build());
 		}
 
-		if (context.getVersion() == ICalVersion.V1_0) {
+		switch (context.getVersion()) {
+		case V1_0:
 			handleVersion1Multivalued(value, dataType, parameters, context);
-			return parseTextVersion1(value, dataType, parameters, context);
+			return parseTextV1(value, dataType, parameters, context);
+		default:
+			return parseTextV2(value, dataType, parameters, context);
 		}
-
-		ListMultimap<String, String> rules = new ListMultimap<String, String>(VObjectPropertyValues.parseMultimap(value));
-
-		parseFreq(rules, builder, context);
-		parseUntil(rules, builder, context);
-		parseCount(rules, builder, context);
-		parseInterval(rules, builder, context);
-		parseBySecond(rules, builder, context);
-		parseByMinute(rules, builder, context);
-		parseByHour(rules, builder, context);
-		parseByDay(rules, builder, context);
-		parseByMonthDay(rules, builder, context);
-		parseByYearDay(rules, builder, context);
-		parseByWeekNo(rules, builder, context);
-		parseByMonth(rules, builder, context);
-		parseBySetPos(rules, builder, context);
-		parseWkst(rules, builder, context);
-		parseXRules(rules, builder); //must be called last
-
-		T property = newInstance(builder.build());
-
-		ICalDate until = property.getValue().getUntil();
-		if (until != null) {
-			context.addDate(until, property, parameters);
-		}
-
-		return property;
 	}
 
 	/**
@@ -242,21 +224,21 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 	 * @param parameters the property parameters
 	 * @param context the parse context
 	 * @throws DataModelConversionException if the property contains multiple
-	 * values
+	 * RRULE values
 	 */
 	private void handleVersion1Multivalued(String value, ICalDataType dataType, ICalParameters parameters, ParseContext context) {
-		List<String> values = splitValues(value);
-		if (values.size() == 1) {
+		List<String> rrules = splitRRULEValues(value);
+		if (rrules.size() == 1) {
 			return;
 		}
 
 		DataModelConversionException conversionException = new DataModelConversionException(null);
-		for (String v : values) {
+		for (String rrule : rrules) {
 			ICalParameters parametersCopy = new ICalParameters(parameters);
 
 			ICalProperty property;
 			try {
-				property = parseTextVersion1(v, dataType, parametersCopy, context);
+				property = parseTextV1(rrule, dataType, parametersCopy, context);
 			} catch (CannotParseException e) {
 				//@formatter:off
 				context.getWarnings().add(new ParseWarning.Builder(context)
@@ -264,7 +246,7 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 					.build()
 				);
 				//@formatter:on
-				property = new RawProperty(getPropertyName(context.getVersion()), dataType, v);
+				property = new RawProperty(getPropertyName(context.getVersion()), dataType, rrule);
 				property.setParameters(parametersCopy);
 			}
 			conversionException.getProperties().add(property);
@@ -279,7 +261,7 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 	 * @param value the property value
 	 * @return the RRULE values
 	 */
-	private List<String> splitValues(String value) {
+	private List<String> splitRRULEValues(String value) {
 		List<String> values = new ArrayList<String>();
 		Pattern p = Pattern.compile("#\\d+|\\d{8}T\\d{6}Z?");
 		Matcher m = p.matcher(value);
@@ -299,7 +281,7 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 		return values;
 	}
 
-	private T parseTextVersion1(String value, ICalDataType dataType, ICalParameters parameters, ParseContext context) {
+	private T parseTextV1(String value, ICalDataType dataType, ICalParameters parameters, ParseContext context) {
 		final Recurrence.Builder builder = new Recurrence.Builder((Frequency) null);
 
 		List<String> splitValues = Arrays.asList(value.toUpperCase().split("\\s+"));
@@ -508,6 +490,36 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 		return property;
 	}
 
+	private T parseTextV2(String value, ICalDataType dataType, ICalParameters parameters, ParseContext context) {
+		Recurrence.Builder builder = new Recurrence.Builder((Frequency) null);
+		ListMultimap<String, String> rules = new ListMultimap<String, String>(VObjectPropertyValues.parseMultimap(value));
+
+		parseFreq(rules, builder, context);
+		parseUntil(rules, builder, context);
+		parseCount(rules, builder, context);
+		parseInterval(rules, builder, context);
+		parseBySecond(rules, builder, context);
+		parseByMinute(rules, builder, context);
+		parseByHour(rules, builder, context);
+		parseByDay(rules, builder, context);
+		parseByMonthDay(rules, builder, context);
+		parseByYearDay(rules, builder, context);
+		parseByWeekNo(rules, builder, context);
+		parseByMonth(rules, builder, context);
+		parseBySetPos(rules, builder, context);
+		parseWkst(rules, builder, context);
+		parseXRules(rules, builder); //must be called last
+
+		T property = newInstance(builder.build());
+
+		ICalDate until = property.getValue().getUntil();
+		if (until != null) {
+			context.addDate(until, property, parameters);
+		}
+
+		return property;
+	}
+
 	/**
 	 * Parses an integer string, where the sign is at the end of the string
 	 * instead of at the beginning (for example, "5-").
@@ -552,7 +564,7 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 			return Math.abs(value) + "-";
 		}
 
-		return Integer.toString(value);
+		return value.toString();
 	}
 
 	private DayOfWeek parseDay(String value) {
@@ -698,8 +710,7 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 			public void handle(String value) {
 				value = value.toUpperCase();
 				try {
-					Frequency frequency = Frequency.valueOf(value);
-					builder.frequency(frequency);
+					builder.frequency(Frequency.valueOf(value));
 				} catch (IllegalArgumentException e) {
 					context.addWarning(7, FREQ, value);
 				}
@@ -711,8 +722,7 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 		parseFirst(rules, UNTIL, new Handler<String>() {
 			public void handle(String value) {
 				try {
-					ICalDate date = date(value).parse();
-					builder.until(date);
+					builder.until(date(value).parse());
 				} catch (IllegalArgumentException e) {
 					context.addWarning(7, UNTIL, value);
 				}
@@ -878,9 +888,9 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 			components.put(INTERVAL, recur.getInterval());
 		}
 
-		addIntegerListComponent(components, BYSECOND, recur.getBySecond());
-		addIntegerListComponent(components, BYMINUTE, recur.getByMinute());
-		addIntegerListComponent(components, BYHOUR, recur.getByHour());
+		components.putAll(BYSECOND, recur.getBySecond());
+		components.putAll(BYMINUTE, recur.getByMinute());
+		components.putAll(BYHOUR, recur.getByHour());
 
 		for (ByDay byDay : recur.getByDay()) {
 			Integer prefix = byDay.getNum();
@@ -893,11 +903,11 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 			components.put(BYDAY, value);
 		}
 
-		addIntegerListComponent(components, BYMONTHDAY, recur.getByMonthDay());
-		addIntegerListComponent(components, BYYEARDAY, recur.getByYearDay());
-		addIntegerListComponent(components, BYWEEKNO, recur.getByWeekNo());
-		addIntegerListComponent(components, BYMONTH, recur.getByMonth());
-		addIntegerListComponent(components, BYSETPOS, recur.getBySetPos());
+		components.putAll(BYMONTHDAY, recur.getByMonthDay());
+		components.putAll(BYYEARDAY, recur.getByYearDay());
+		components.putAll(BYWEEKNO, recur.getByWeekNo());
+		components.putAll(BYMONTH, recur.getByMonth());
+		components.putAll(BYSETPOS, recur.getBySetPos());
 
 		if (recur.getWorkweekStarts() != null) {
 			components.put(WKST, recur.getWorkweekStarts().getAbbr());
@@ -905,9 +915,8 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 
 		for (Map.Entry<String, List<String>> entry : recur.getXRules().entrySet()) {
 			String name = entry.getKey();
-			for (String value : entry.getValue()) {
-				components.put(name, value);
-			}
+			List<String> values = entry.getValue();
+			components.putAll(name, values);
 		}
 
 		return components;
@@ -974,12 +983,6 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 		 * Otherwise, UNTIL should be UTC.
 		 */
 		return date(until).extended(extended).utc(true).write();
-	}
-
-	private void addIntegerListComponent(ListMultimap<String, Object> components, String name, List<Integer> values) {
-		for (Integer value : values) {
-			components.put(name, value);
-		}
 	}
 
 	private void parseFirst(ListMultimap<String, String> rules, String name, Handler<String> handler) {

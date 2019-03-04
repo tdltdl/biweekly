@@ -6,7 +6,6 @@
 | Code Coverage: | [![codecov.io](http://codecov.io/github/mangstadt/biweekly/coverage.svg?branch=master)](http://codecov.io/github/mangstadt/biweekly?branch=master) |
 | Maven Central: | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.sf.biweekly/biweekly/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.sf.biweekly/biweekly) |
 | Chat Room: | [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mangstadt/biweekly?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) |
-| Q & A: | [![Codewake](https://www.codewake.com/badges/ask_question.svg)](https://www.codewake.com/p/biweekly) |
 | License: | [![FreeBSD License](https://img.shields.io/badge/License-FreeBSD-red.svg)](https://github.com/mangstadt/biweekly/blob/master/LICENSE) |
 
 biweekly is an iCalendar library written in Java. The project aims to provide a well documented, easy to use API for reading and writing iCalendar data.
@@ -69,7 +68,7 @@ String str = Biweekly.write(ical).go();
  * Supports XML and JSON formats (see [Supported Specifications](https://github.com/mangstadt/biweekly/wiki/Supported-Specifications)).
  * Full timezone support (uses [tzurl.org](http://tzurl.org) for timezone definitions).
  * Extensive unit test coverage.
- * Low Java version requirement (1.5 or above, 1.6 for JSON support).
+ * Low Java version requirement (1.5 or above).
  * Few dependencies on external libraries.  Dependencies can be selectively excluded based on the functionality that is needed (see [Dependencies](https://github.com/mangstadt/biweekly/wiki/Dependencies)).
 
 # Maven/Gradle
@@ -80,14 +79,14 @@ String str = Biweekly.write(ical).go();
 <dependency>
    <groupId>net.sf.biweekly</groupId>
    <artifactId>biweekly</artifactId>
-   <version>0.6.1</version>
+   <version>0.6.3</version>
 </dependency>
 ```
 
 **Gradle**
 
 ```
-compile 'net.sf.biweekly:biweekly:0.6.1'
+compile 'net.sf.biweekly:biweekly:0.6.3'
 ```
 
 # Build Instructions
@@ -104,7 +103,6 @@ You have some options:
 
  * [Issue tracker](https://github.com/mangstadt/biweekly/issues)
  * [Gitter chat room](https://gitter.im/mangstadt/biweekly)
- * [codewake Q&A forum](https://www.codewake.com/p/biweekly)
  * [Post a question to StackOverflow](http://stackoverflow.com/questions/ask) with `ical` as a tag
  * Email me directly: [mike.angstadt@gmail.com](mailto:mike.angstadt@gmail.com)
 

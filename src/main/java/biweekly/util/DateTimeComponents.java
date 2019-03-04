@@ -1,10 +1,10 @@
 package biweekly.util;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 import biweekly.Messages;
 
 /*
- Copyright (c) 2013-2017, Michael Angstadt
+ Copyright (c) 2013-2018, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -300,7 +300,9 @@ public final class DateTimeComponents implements Comparable<DateTimeComponents>,
 	 * @return the date string
 	 */
 	public String toString(boolean includeTime, boolean extended) {
-		NumberFormat nf = new DecimalFormat("00");
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		nf.setMinimumIntegerDigits(2);
+		nf.setMaximumIntegerDigits(2);
 		String dash = extended ? "-" : "";
 		String colon = extended ? ":" : "";
 		String z = utc ? "Z" : "";
