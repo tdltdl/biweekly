@@ -24,7 +24,7 @@ import biweekly.util.DateTimeComponents;
 import biweekly.util.ICalDate;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -62,7 +62,7 @@ public class DateOrDateTimePropertyScribeTest extends ScribeTest<DateOrDateTimeP
 
 	private final DateOrDateTimePropertyImpl withDateTime = new DateOrDateTimePropertyImpl(datetime, true);
 	private final DateOrDateTimePropertyImpl withDate = new DateOrDateTimePropertyImpl(datetime, false);
-	private final DateOrDateTimePropertyImpl empty = new DateOrDateTimePropertyImpl((Date) null, false);
+	private final DateOrDateTimePropertyImpl empty = new DateOrDateTimePropertyImpl(null, false);
 
 	private final TimezoneInfo floatingGlobal = new TimezoneInfo();
 	{

@@ -36,7 +36,7 @@ import com.github.mangstadt.vinnie.io.VObjectDataListener;
 import com.github.mangstadt.vinnie.io.VObjectReader;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -388,7 +388,7 @@ public class ICalReader extends StreamReader {
 		 * Assigns names to all nameless parameters. v2.0 requires all
 		 * parameters to have names, but v1.0 does not.
 		 * @param parameters the parameters
-		 * @param propertyName the property name
+		 * @param version the iCal version
 		 */
 		private void processNamelessParameters(ICalParameters parameters, ICalVersion version) {
 			List<String> namelessParamValues = parameters.removeAll(null);

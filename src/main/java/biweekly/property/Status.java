@@ -10,7 +10,7 @@ import biweekly.component.VJournal;
 import biweekly.component.VTodo;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -334,7 +334,7 @@ public class Status extends EnumProperty {
 			return Arrays.asList(ICalVersion.V2_0_DEPRECATED, ICalVersion.V2_0);
 		}
 		if (isAccepted() || isDeclined() || isDelegated() || isSent()) {
-			return Arrays.asList(ICalVersion.V1_0);
+			return Collections.singletonList(ICalVersion.V1_0);
 		}
 
 		return Collections.emptyList();

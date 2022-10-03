@@ -51,7 +51,7 @@ import biweekly.util.Utf8Writer;
 import biweekly.util.XmlUtils;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -438,10 +438,10 @@ public class XCalWriter extends XCalWriterBase {
 	}
 
 	/**
-	 * Makes an childless element appear as {@code<foo />} instead of
-	 * {@code<foo></foo>}
+	 * Makes an childless element appear as {@code <foo />} instead of
+	 * {@code <foo></foo>}
 	 * @param element the element
-	 * @throws SAXException
+	 * @throws SAXException if there's a problem creating the element
 	 */
 	private void childless(Element element) throws SAXException {
 		Attributes attributes = getElementAttributes(element);

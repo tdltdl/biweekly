@@ -7,7 +7,7 @@ import java.util.TimeZone;
 import org.junit.rules.ExternalResource;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -32,11 +32,12 @@ import org.junit.rules.ExternalResource;
  */
 
 /**
- * Changes the JVM's default timezone for the duration of a test.
+ * Changes the JVM's default timezone temporarily for all of the tests in a test
+ * class.
  * @author Michael Angstadt
  */
 public class DefaultTimezoneRule extends ExternalResource {
-	private final int hour, minute;
+	private final TimeZone newTz;
 	private TimeZone defaultTz;
 
 	/**
@@ -44,14 +45,20 @@ public class DefaultTimezoneRule extends ExternalResource {
 	 * @param minute the minute component of the UTC offset
 	 */
 	public DefaultTimezoneRule(int hour, int minute) {
-		this.hour = hour;
-		this.minute = minute;
+		newTz = buildTimezone(hour, minute);
+	}
+	
+	/**
+	 * @param tzid the timezone ID (e.g. "America/New_York")
+	 */
+	public DefaultTimezoneRule(String tzid) {
+		newTz = TimeZone.getTimeZone(tzid);
 	}
 
 	@Override
 	protected void before() {
 		defaultTz = TimeZone.getDefault();
-		TimeZone.setDefault(buildTimezone(hour, minute));
+		TimeZone.setDefault(newTz);
 	}
 
 	@Override

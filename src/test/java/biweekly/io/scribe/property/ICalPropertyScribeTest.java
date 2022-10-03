@@ -4,7 +4,7 @@ import static biweekly.ICalVersion.V1_0;
 import static biweekly.ICalVersion.V2_0;
 import static biweekly.util.TestUtils.date;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
 import java.util.Date;
@@ -29,7 +29,7 @@ import biweekly.util.ICalDate;
 import biweekly.util.ListMultimap;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -151,7 +151,7 @@ public class ICalPropertyScribeTest extends ScribeTest<TestProperty> {
 		TestProperty property = new TestProperty("value");
 		ICalParameters copy = scribe.prepareParameters(property, null);
 
-		assertFalse(property.getParameters() == copy);
+		assertNotSame(property.getParameters(), copy);
 		assertEquals("value", copy.first("PARAM"));
 	}
 

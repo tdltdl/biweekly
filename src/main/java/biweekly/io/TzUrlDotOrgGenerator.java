@@ -19,7 +19,7 @@ import biweekly.property.ValuedProperty;
 import biweekly.util.IOUtils;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -127,7 +127,7 @@ public class TzUrlDotOrgGenerator {
 			component.setTimezoneId(timezone.getID());
 		} else {
 			String value = ValuedProperty.getValue(id);
-			if (value == null || value.trim().length() == 0) {
+			if (value == null || value.trim().isEmpty()) {
 				id.setValue(timezone.getID());
 			}
 		}

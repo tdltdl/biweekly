@@ -37,7 +37,7 @@ import biweekly.util.Recurrence;
 import biweekly.util.XmlUtils;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -202,7 +202,7 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 
 	@Override
 	protected T _parseText(String value, ICalDataType dataType, ICalParameters parameters, ParseContext context) {
-		if (value.length() == 0) {
+		if (value.isEmpty()) {
 			return newInstance(new Recurrence.Builder((Frequency) null).build());
 		}
 
@@ -311,7 +311,7 @@ public abstract class RecurrencePropertyScribe<T extends RecurrenceProperty> ext
 		} else {
 			String lastToken = splitValues.get(splitValues.size() - 1);
 			if (lastToken.startsWith("#")) {
-				String countStr = lastToken.substring(1, lastToken.length());
+				String countStr = lastToken.substring(1);
 				count = integerValueOf(countStr);
 				if (count == 0) {
 					//infinite

@@ -1,7 +1,7 @@
 package biweekly.io.scribe.property;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import biweekly.ICalDataType;
@@ -14,7 +14,7 @@ import biweekly.property.EmailAlarm;
 import com.github.mangstadt.vinnie.io.VObjectPropertyValues.SemiStructuredValueIterator;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@ public class EmailAlarmScribe extends VCalAlarmPropertyScribe<EmailAlarm> {
 		String email = property.getEmail();
 		String note = property.getNote();
 		if (email == null && note == null) {
-			return Arrays.asList();
+			return Collections.emptyList();
 		}
 
 		List<String> dataValues = new ArrayList<String>(2);

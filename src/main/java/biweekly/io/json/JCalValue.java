@@ -10,7 +10,7 @@ import java.util.Map;
 import biweekly.util.ListMultimap;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -103,7 +103,7 @@ public class JCalValue {
 	public static JCalValue structured(Object... values) {
 		List<List<?>> valuesList = new ArrayList<List<?>>(values.length);
 		for (Object value : values) {
-			List<?> list = (value instanceof List) ? (List<?>) value : Arrays.asList(value);
+			List<?> list = (value instanceof List) ? (List<?>) value : Collections.singletonList(value);
 			valuesList.add(list);
 		}
 		return structured(valuesList);
@@ -228,14 +228,14 @@ public class JCalValue {
 			List<List<String>> components = new ArrayList<List<String>>(array.size());
 			for (JsonValue value : array) {
 				if (value.isNull()) {
-					components.add(Arrays.<String> asList());
+					components.add(Collections.<String>emptyList());
 					continue;
 				}
 
 				Object obj = value.getValue();
 				if (obj != null) {
 					String s = obj.toString();
-					List<String> component = (s.length() == 0) ? Arrays.<String> asList() : Arrays.asList(s);
+					List<String> component = s.isEmpty() ? Collections.<String>emptyList() : Collections.singletonList(s);
 					components.add(component);
 					continue;
 				}
@@ -255,7 +255,7 @@ public class JCalValue {
 							continue;
 						}
 					}
-					if (component.size() == 1 && component.get(0).length() == 0) {
+					if (component.size() == 1 && component.get(0).isEmpty()) {
 						component.clear();
 					}
 					components.add(component);
@@ -270,7 +270,7 @@ public class JCalValue {
 		if (obj != null) {
 			List<List<String>> components = new ArrayList<List<String>>(1);
 			String s = obj.toString();
-			List<String> component = (s.length() == 0) ? Arrays.<String> asList() : Arrays.asList(s);
+			List<String> component = s.isEmpty() ? Collections.<String>emptyList() : Collections.singletonList(s);
 			components.add(component);
 			return components;
 		}
@@ -278,7 +278,7 @@ public class JCalValue {
 		//["request-status", {}, "text", null]
 		if (first.isNull()) {
 			List<List<String>> components = new ArrayList<List<String>>(1);
-			components.add(Arrays.<String> asList());
+			components.add(Collections.<String>emptyList());
 			return components;
 		}
 

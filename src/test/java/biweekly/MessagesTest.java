@@ -15,7 +15,7 @@ import java.util.Set;
 import org.junit.Test;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -113,7 +113,7 @@ public class MessagesTest {
 		try {
 			while ((line = reader.readLine()) != null) {
 				line = line.trim();
-				if (line.length() == 0 || line.charAt(0) == '#') {
+				if (line.isEmpty() || line.charAt(0) == '#') {
 					continue;
 				}
 

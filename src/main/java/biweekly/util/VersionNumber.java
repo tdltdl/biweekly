@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -65,8 +65,8 @@ public class VersionNumber implements Comparable<VersionNumber> {
 		Iterator<Integer> it = parts.iterator();
 		Iterator<Integer> it2 = that.parts.iterator();
 		while (it.hasNext() || it2.hasNext()) {
-			Integer number = it.hasNext() ? it.next() : 0;
-			Integer number2 = it2.hasNext() ? it2.next() : 0;
+			int number = it.hasNext() ? it.next() : 0;
+			int number2 = it2.hasNext() ? it2.next() : 0;
 
 			if (number < number2) {
 				return -1;

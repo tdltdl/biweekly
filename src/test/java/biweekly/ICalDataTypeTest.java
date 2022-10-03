@@ -2,6 +2,7 @@ package biweekly;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
@@ -9,7 +10,7 @@ import java.util.Collection;
 import org.junit.Test;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -39,17 +40,17 @@ import org.junit.Test;
 public class ICalDataTypeTest {
 	@Test
 	public void get() {
-		assertTrue(ICalDataType.TEXT == ICalDataType.get("tExT"));
+		assertSame(ICalDataType.TEXT, ICalDataType.get("tExT"));
 
 		ICalDataType test = ICalDataType.get("test");
 		ICalDataType test2 = ICalDataType.get("tEsT");
 		assertEquals("test", test2.getName());
-		assertTrue(test == test2);
+		assertSame(test, test2);
 	}
 
 	@Test
 	public void find() {
-		assertTrue(ICalDataType.TEXT == ICalDataType.find("tExT"));
+		assertSame(ICalDataType.TEXT, ICalDataType.find("tExT"));
 
 		//find() ignores runtime-defined objects
 		ICalDataType.get("test");

@@ -45,7 +45,7 @@ import biweekly.io.text.ICalReader;
 import biweekly.property.ICalProperty;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -91,15 +91,19 @@ public class TestUtils {
 	 * use "null" for warnings that do not have a code)
 	 */
 	public static void assertParseWarnings(List<ParseWarning> warnings, Integer... expectedCodes) {
-		List<Integer> expectedWarnings = new ArrayList<Integer>(Arrays.asList(expectedCodes));
 		List<Integer> actualWarnings = new ArrayList<Integer>(warnings.size());
 		for (ParseWarning warning : warnings) {
 			actualWarnings.add(warning.getCode());
 		}
 
+		if (actualWarnings.size() != expectedCodes.length) {
+			fail("Expected these warnings " + Arrays.toString(expectedCodes) + ", but was this: " + actualWarnings + ".  Actual warnings: " + warnings);
+		}
+
+		List<Integer> expectedWarnings = new ArrayList<Integer>(Arrays.asList(expectedCodes));
 		for (Integer actualWarning : actualWarnings) {
 			if (!expectedWarnings.remove(actualWarning)) {
-				fail("Expected these warnings " + expectedWarnings + ", but was this: " + actualWarnings + ".  Actual warnings: " + warnings);
+				fail("Expected these warnings " + Arrays.toString(expectedCodes) + ", but was this: " + actualWarnings + ".  Actual warnings: " + warnings);
 			}
 		}
 	}
@@ -284,7 +288,7 @@ public class TestUtils {
 	 * </p>
 	 * @param text the date string to parse
 	 * @return the parsed date
-	 * @throws IllegalArgumentExcpetion if it couldn't be parsed
+	 * @throws IllegalArgumentException if it couldn't be parsed
 	 */
 	public static Date date(String text) {
 		return date(text, TimeZone.getDefault());
@@ -306,7 +310,7 @@ public class TestUtils {
 	 * @param timezone the timezone the date string is in (ignored if the date
 	 * string contains a UTC offset)
 	 * @return the parsed date
-	 * @throws IllegalArgumentExcpetion if it couldn't be parsed
+	 * @throws IllegalArgumentException if it couldn't be parsed
 	 */
 	public static Date date(String text, TimeZone timezone) {
 		for (DateFormat df : dfs) {
@@ -333,7 +337,7 @@ public class TestUtils {
 	 * acceptable formats)
 	 * @return the parsed date in the UTC timezone or null if it couldn't be
 	 * parsed
-	 * @throws IllegalArgumentExcpetion if it couldn't be parsed
+	 * @throws IllegalArgumentException if it couldn't be parsed
 	 */
 	public static Date utc(String text) {
 		return date(text + " +0000");

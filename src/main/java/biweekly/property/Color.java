@@ -1,7 +1,7 @@
 package biweekly.property;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -110,6 +110,6 @@ public class Color extends TextProperty {
 
 	@Override
 	protected boolean valueEquals(String otherValue) {
-		return value.equalsIgnoreCase((String) otherValue);
+		return value.equalsIgnoreCase(otherValue);
 	}
 }

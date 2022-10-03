@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -428,7 +428,8 @@ public class CompoundIteratorImplTest {
 			new DateValueImpl(2006, 4, 28),
 			
 			new DateValueImpl(2006, 5, 1),
-			new DateValueImpl(2006, 5, 2)
+			new DateValueImpl(2006, 5, 2),
+			new DateValueImpl(2006, 5, 3)
 		), it);
 	}
 	
@@ -465,7 +466,8 @@ public class CompoundIteratorImplTest {
 				new DateValueImpl(2006, 4, 28),
 				
 				new DateValueImpl(2006, 5, 1),
-				new DateValueImpl(2006, 5, 2)
+				new DateValueImpl(2006, 5, 2),
+				new DateValueImpl(2006, 5, 3)
 		), it);
 	}
 	
@@ -497,7 +499,8 @@ public class CompoundIteratorImplTest {
 				new DateValueImpl(2006, 4, 28),
 				
 				new DateValueImpl(2006, 5, 1),
-				new DateValueImpl(2006, 5, 2)
+				new DateValueImpl(2006, 5, 2),
+				new DateValueImpl(2006, 5, 3)
 		), it);
 	}
 	

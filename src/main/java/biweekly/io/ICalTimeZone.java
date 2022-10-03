@@ -4,7 +4,6 @@ import static biweekly.property.ValuedProperty.getValue;
 import static biweekly.util.Google2445Utils.convertFromRawComponents;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,7 +39,7 @@ import biweekly.util.com.google.ical.values.DateTimeValueImpl;
 import biweekly.util.com.google.ical.values.DateValue;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -503,7 +502,7 @@ public class ICalTimeZone extends TimeZone {
 			DateValue dtstartValue = convertFromRawComponents(dtstart);
 
 			//add DTSTART property
-			inclusions.add(new DateValueRecurrenceIterator(Arrays.asList(dtstartValue)));
+			inclusions.add(new DateValueRecurrenceIterator(Collections.singletonList(dtstartValue)));
 
 			//add RRULE properties
 			for (RecurrenceRule rrule : observance.getProperties(RecurrenceRule.class)) {

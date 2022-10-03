@@ -7,7 +7,7 @@ import java.util.Collections;
 import biweekly.ICalVersion;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -108,7 +108,7 @@ public class CalendarScale extends EnumProperty {
 
 	@Override
 	protected Collection<String> getStandardValues(ICalVersion version) {
-		return Arrays.asList(GREGORIAN);
+		return Collections.singletonList(GREGORIAN);
 	}
 
 	@Override

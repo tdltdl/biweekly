@@ -12,7 +12,7 @@ import biweekly.property.IntegerProperty;
 import com.github.mangstadt.vinnie.io.VObjectPropertyValues;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -96,7 +96,7 @@ public abstract class IntegerPropertyScribe<T extends IntegerProperty> extends I
 	}
 
 	private T parse(String value) {
-		if (value == null || value.length() == 0) {
+		if (value == null || value.isEmpty()) {
 			return newInstance(null);
 		}
 

@@ -23,7 +23,7 @@ import com.github.mangstadt.vinnie.io.VObjectPropertyValues;
 import com.github.mangstadt.vinnie.io.VObjectPropertyValues.SemiStructuredValueIterator;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -130,7 +130,7 @@ public abstract class VCalAlarmPropertyScribe<T extends VCalAlarmProperty> exten
 		}
 
 		next = next.trim();
-		return (next.length() == 0) ? null : next;
+		return next.isEmpty() ? null : next;
 	}
 
 	/**

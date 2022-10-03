@@ -3,7 +3,7 @@ package biweekly.util;
 import java.util.Calendar;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,7 @@ public enum DayOfWeek {
 	private final String abbr;
 	private final int calendarConstant;
 
-	private DayOfWeek(String abbr, int calendarConstant) {
+	DayOfWeek(String abbr, int calendarConstant) {
 		this.abbr = abbr;
 		this.calendarConstant = calendarConstant;
 	}

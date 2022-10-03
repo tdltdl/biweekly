@@ -8,7 +8,7 @@ import biweekly.property.TimezoneId;
 import biweekly.property.ValuedProperty;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,7 @@ public class TimezoneAssignment {
 	 */
 	public TimezoneAssignment(TimeZone timezone, VTimezone component) {
 		String id = ValuedProperty.getValue(component.getTimezoneId());
-		if (id == null || id.trim().length() == 0) {
+		if (id == null || id.trim().isEmpty()) {
 			throw Messages.INSTANCE.getIllegalArgumentException(14);
 		}
 

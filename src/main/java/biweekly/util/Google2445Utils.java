@@ -1,7 +1,6 @@
 package biweekly.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -27,7 +26,7 @@ import biweekly.util.com.google.ical.values.DateValue;
 import biweekly.util.com.google.ical.values.DateValueImpl;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -272,7 +271,7 @@ public final class Google2445Utils {
 			if (start == null) {
 				return new EmptyDateIterator();
 			}
-			include.add(new ICalDateRecurrenceIterator(Arrays.asList(start)));
+			include.add(new ICalDateRecurrenceIterator(Collections.singletonList(start)));
 		}
 
 		/////////////EXCLUDE/////////////

@@ -1,8 +1,8 @@
 package biweekly.io.json;
 
-import static biweekly.util.StringUtils.NEWLINE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.StringReader;
@@ -22,7 +22,7 @@ import biweekly.util.ListMultimap;
 import com.fasterxml.jackson.core.JsonToken;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -1040,7 +1040,7 @@ public class JCalRawReaderTest {
 					assertEquals(Arrays.asList("vcalendar"), componentHierarchy);
 					assertEquals("prop", name);
 					assertTrue(parameters.isEmpty());
-					assertTrue(ICalDataType.get("foo") == dataType);
+					assertSame(ICalDataType.get("foo"), dataType);
 					assertEquals("value", value.asSingle());
 					break;
 				}

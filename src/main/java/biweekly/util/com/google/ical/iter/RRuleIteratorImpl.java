@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -262,6 +262,10 @@ final class RRuleIteratorImpl implements RecurrenceIterator {
 							return;
 						}
 					}
+				}
+				
+				if (builder.month < dateLocal.month()) {
+					builder.day = 1;
 				}
 
 				//skip months before date.year/date.month

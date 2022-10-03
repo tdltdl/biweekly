@@ -15,7 +15,7 @@ import biweekly.property.TimezoneId;
 import biweekly.property.ValuedProperty;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -99,7 +99,7 @@ public class TimezoneInfo {
 	 */
 	public void setDefaultTimezone(TimezoneAssignment timezone) {
 		if (timezone == null) {
-			if (defaultTimezone != null && !propertyTimezones.values().contains(defaultTimezone)) {
+			if (defaultTimezone != null && !propertyTimezones.containsValue(defaultTimezone)) {
 				assignments.remove(defaultTimezone);
 			}
 		} else {
@@ -118,7 +118,7 @@ public class TimezoneInfo {
 	public void setTimezone(ICalProperty property, TimezoneAssignment timezone) {
 		if (timezone == null) {
 			TimezoneAssignment existing = propertyTimezones.remove(property);
-			if (existing != null && existing != defaultTimezone && !propertyTimezones.values().contains(existing)) {
+			if (existing != null && existing != defaultTimezone && !propertyTimezones.containsValue(existing)) {
 				assignments.remove(existing);
 			}
 			return;

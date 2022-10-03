@@ -1,6 +1,6 @@
 package biweekly.io.scribe.property;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import biweekly.ICalDataType;
@@ -11,7 +11,7 @@ import biweekly.property.DisplayAlarm;
 import com.github.mangstadt.vinnie.io.VObjectPropertyValues.SemiStructuredValueIterator;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -47,11 +47,7 @@ public class DisplayAlarmScribe extends VCalAlarmPropertyScribe<DisplayAlarm> {
 	@Override
 	protected List<String> writeData(DisplayAlarm property) {
 		String text = property.getText();
-		if (text != null) {
-			return Arrays.asList(text);
-		}
-
-		return Arrays.asList();
+		return (text == null) ? Collections.<String>emptyList() : Collections.singletonList(text);
 	}
 
 	@Override

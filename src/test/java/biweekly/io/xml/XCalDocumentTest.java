@@ -85,7 +85,7 @@ import biweekly.util.Utf8Writer;
 import biweekly.util.XmlUtils;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -598,7 +598,7 @@ public class XCalDocumentTest {
 		assertSize(ical, 0, 2);
 
 		RawProperty property = ical.getExperimentalProperty("x-foo");
-		assertEquals(null, property.getDataType());
+		assertNull(property.getDataType());
 		assertEquals("X-FOO", property.getName());
 		assertEquals("bar", property.getValue());
 

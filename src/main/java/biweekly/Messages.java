@@ -5,7 +5,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ public enum Messages {
 
 	private final transient ResourceBundle messages;
 
-	private Messages() {
+	Messages() {
 		messages = ResourceBundle.getBundle("biweekly/messages");
 	}
 

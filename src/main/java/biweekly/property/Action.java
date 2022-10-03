@@ -7,7 +7,7 @@ import java.util.Collections;
 import biweekly.ICalVersion;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -178,7 +178,7 @@ public class Action extends EnumProperty {
 			return Arrays.asList(ICalVersion.values());
 		}
 		if (isProcedure()) {
-			return Arrays.asList(ICalVersion.V1_0);
+			return Collections.singletonList(ICalVersion.V1_0);
 		}
 
 		return Collections.emptyList();

@@ -3,7 +3,7 @@ package biweekly;
 import com.github.mangstadt.vinnie.SyntaxStyle;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@ public enum ICalVersion {
 	/**
 	 * @param version the version number
 	 */
-	private ICalVersion(String version, SyntaxStyle syntaxStyle) {
+	ICalVersion(String version, SyntaxStyle syntaxStyle) {
 		this.version = version;
 		this.syntaxStyle = syntaxStyle;
 	}

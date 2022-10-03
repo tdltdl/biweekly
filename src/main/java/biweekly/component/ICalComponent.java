@@ -20,7 +20,7 @@ import biweekly.util.ListMultimap;
 import biweekly.util.StringUtils;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -451,7 +451,7 @@ public abstract class ICalComponent {
 	 * @param hierarchy the hierarchy of components that the component belongs
 	 * to
 	 * @param version the version to validate against
-	 * @see ICalendar#validate
+	 * @see ICalendar#validate(List, ICalVersion)
 	 * @return a list of warnings or an empty list if no problems were found
 	 */
 	public final List<WarningsGroup> validate(List<ICalComponent> hierarchy, ICalVersion version) {

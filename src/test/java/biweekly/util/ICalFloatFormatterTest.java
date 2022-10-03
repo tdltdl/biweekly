@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Test;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -69,9 +69,17 @@ public class ICalFloatFormatterTest {
 	}
 
 	@Test
-	public void format_other_locale() {
-		//Germany uses "," as the decimal separator, but "." should still be used
-		Locale.setDefault(Locale.GERMANY);
-		assertEquals("-12.388889", formatter.format(-12.3888888));
+	public void format_different_locales() {
+		Locale defaultLocale = Locale.getDefault();
+
+		try {
+			for (Locale locale : Locale.getAvailableLocales()) {
+				Locale.setDefault(locale);
+				ICalFloatFormatter formatter = new ICalFloatFormatter();
+				assertEquals("Test failed for locale: " + locale, "-12.388889", formatter.format(-12.3888888));
+			}
+		} finally {
+			Locale.setDefault(defaultLocale);
+		}
 	}
 }

@@ -3,7 +3,6 @@ package biweekly.io;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,7 +24,7 @@ import biweekly.property.ICalProperty;
 import biweekly.property.RawProperty;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -91,7 +90,7 @@ public abstract class StreamWriter implements Closeable {
 	protected Collection<VTimezone> getTimezoneComponents() {
 		if (globalTimezone != null) {
 			VTimezone component = globalTimezone.getComponent();
-			return (component == null) ? Collections.<VTimezone> emptyList() : Arrays.asList(component);
+			return (component == null) ? Collections.<VTimezone> emptyList() : Collections.singletonList(component);
 		}
 
 		return tzinfo.getComponents();

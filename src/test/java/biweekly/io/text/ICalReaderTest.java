@@ -78,7 +78,7 @@ import biweekly.util.UtcOffset;
 import biweekly.util.Utf8Writer;
 
 /*
- Copyright (c) 2013-2018, Michael Angstadt
+ Copyright (c) 2013-2021, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -752,7 +752,7 @@ public class ICalReaderTest {
 		assertSize(icalendar, 0, 1);
 
 		RawProperty property = icalendar.getExperimentalProperty("X-FOO");
-		assertEquals(null, property.getDataType());
+		assertNull(property.getDataType());
 		assertEquals("X-FOO", property.getName());
 		assertEquals("bar", property.getValue());
 
@@ -777,12 +777,12 @@ public class ICalReaderTest {
 		assertSize(icalendar, 0, 2);
 
 		RawProperty property = icalendar.getExperimentalProperty("CANNOTPARSE");
-		assertEquals(null, property.getDataType());
+		assertNull(property.getDataType());
 		assertEquals("CANNOTPARSE", property.getName());
 		assertEquals("value", property.getValue());
 
 		property = icalendar.getExperimentalProperty("X-FOO");
-		assertEquals(null, property.getDataType());
+		assertNull(property.getDataType());
 		assertEquals("X-FOO", property.getName());
 		assertEquals("bar", property.getValue());
 
@@ -1236,7 +1236,7 @@ public class ICalReaderTest {
 				StandardTime standard = timezone.getStandardTimes().get(0);
 				assertSize(standard, 0, 2);
 
-				assertEquals(null, standard.getDateStart());
+				assertNull(standard.getDateStart());
 				assertEquals(new UtcOffset(false, 5, 0), standard.getTimezoneOffsetFrom().getValue());
 				assertEquals(new UtcOffset(false, 5, 0), standard.getTimezoneOffsetTo().getValue());
 				assertEquals(0, standard.getTimezoneNames().size());
@@ -1401,7 +1401,7 @@ public class ICalReaderTest {
 			assertEquals("Team Meeting", event.getSummary().getValue());
 			assertEquals("en-us", event.getSummary().getLanguage());
 
-			assertEquals(true, event.getTransparency().isOpaque());
+			assertTrue(event.getTransparency().isOpaque());
 			assertEquals("040000009200E00074C5B7101A82E00800000000C0383BE68041CE0100000000000000001000000070D00A2F625AC34BB6542DE0D19E67E1", event.getUid().getValue());
 			//@formatter:off
 			assertEquals(
@@ -1579,7 +1579,7 @@ public class ICalReaderTest {
 				assertSize(daylight, 0, 4);
 
 				assertEquals(date("1999-04-04 02:00:00"), daylight.getDateStart().getValue());
-				assertEquals(new DateTimeComponents(1999, 04, 04, 2, 0, 0, false), daylight.getDateStart().getValue().getRawComponents());
+				assertEquals(new DateTimeComponents(1999, 4, 4, 2, 0, 0, false), daylight.getDateStart().getValue().getRawComponents());
 
 				assertEquals(new UtcOffset(false, 5, 0), daylight.getTimezoneOffsetFrom().getValue());
 				assertEquals(new UtcOffset(false, 4, 0), daylight.getTimezoneOffsetTo().getValue());
