@@ -19,12 +19,13 @@ import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import biweekly.component.VTimezone;
 
 /*
- Copyright (c) 2013-2021, Michael Angstadt
+ Copyright (c) 2013-2023, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -147,6 +148,15 @@ public class TzUrlDotOrgGeneratorTest {
 		assertEquals("TEST", component2.getTimezoneId().getValue());
 		assertEquals("TEST", component3.getTimezoneId().getValue());
 		verify(generator).getInputStream(any(URI.class));
+	}
+	
+	@Test
+	@Ignore
+	public void live() throws Exception {
+		TzUrlDotOrgGenerator generator = new TzUrlDotOrgGenerator(false);
+
+		VTimezone component = generator.generate(TimeZone.getTimeZone("Europe/Paris"));
+		assertEquals("Europe/Paris", component.getTimezoneId().getValue());
 	}
 
 	private static InputStream noICalendar() {

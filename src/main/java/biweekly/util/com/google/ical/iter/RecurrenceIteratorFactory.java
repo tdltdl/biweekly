@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /*
- Copyright (c) 2013-2021, Michael Angstadt
+ Copyright (c) 2013-2023, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -213,10 +213,20 @@ public class RecurrenceIteratorFactory {
 			 */
 			switch (freq) {
 			case YEARLY:
-				start = (dtStart instanceof TimeValue) ? new DateTimeValueImpl(start.year(), 1, 1, 0, 0, 0) : new DateValueImpl(start.year(), 1, 1);
+				if (dtStart instanceof TimeValue) {
+					TimeValue tv = (TimeValue) dtStart;
+					start = new DateTimeValueImpl(start.year(), 1, 1, tv.hour(), tv.minute(), tv.second());
+				} else {
+					start = new DateValueImpl(start.year(), 1, 1);
+				}
 				break;
 			case MONTHLY:
-				start = (dtStart instanceof TimeValue) ? new DateTimeValueImpl(start.year(), start.month(), 1, 0, 0, 0) : new DateValueImpl(start.year(), start.month(), 1);
+				if (dtStart instanceof TimeValue) {
+					TimeValue tv = (TimeValue) dtStart;
+					start = new DateTimeValueImpl(start.year(), start.month(), 1, tv.hour(), tv.minute(), tv.second());
+				} else {
+					start = new DateValueImpl(start.year(), start.month(), 1);
+				}
 				break;
 			case WEEKLY:
 				int d = (7 + wkst.ordinal() - TimeUtils.dayOfWeek(dtStart).getCalendarConstant()) % 7;
